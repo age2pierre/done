@@ -212,6 +212,7 @@ if set -q __done_enabled
     set -q __done_min_cmd_duration; or set -g __done_min_cmd_duration 5000
     set -q __done_exclude; or set -g __done_exclude '^git (?!push|pull|fetch)'
     set -q __done_notify_sound; or set -g __done_notify_sound 0
+    set -q __done_focus_check; or set -g __done_focus_check 1
     set -q __done_sway_ignore_visible; or set -g __done_sway_ignore_visible 0
     set -q __done_tmux_pane_format; or set -g __done_tmux_pane_format '[#{window_index}]'
     set -q __done_notification_duration; or set -g __done_notification_duration 3000
@@ -228,7 +229,9 @@ if set -q __done_enabled
 
         if test $cmd_duration
             and test $cmd_duration -gt $__done_min_cmd_duration # longer than notify_duration
-            and not __done_is_process_window_focused # process pane or window not focused
+            and begin
+                test $__done_focus_check -eq 0; or not __done_is_process_window_focused
+            end # process pane or window not focused
 
             # don't notify if command matches exclude list
             for pattern in $__done_exclude
