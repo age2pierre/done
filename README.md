@@ -136,12 +136,6 @@ set -U __done_kitty_remote_control_password "kitty-rc-password"
 set -U __done_notification_duration 5000 # 5 seconds
 ```
 
-#### Disable windows not focused check
-
-```fish
-set -U __done_focus_check 0
-```
-
 ## Support
 
 - [fish](https://fishshell.com) 2.3.0+
